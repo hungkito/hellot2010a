@@ -18,11 +18,11 @@ public class MySqlCustomerModel implements CustomerModel{
         try {
             Connection connection = ConnectionHelper.getConnection();
             String sqlQuery = "insert into customers" +
-                    "(id, name, phone, image, dob, createdAt, updatedAt, status)" +
+                    "(rollnumber, name, phone, image, dob, createdAt, updatedAt, status)" +
                     "values " +
                     "(?, ?, ?, ?, ?, ?, ?, ?)";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, customer.getId());
+            preparedStatement.setString(1, customer.getRollnumber());
             preparedStatement.setString(2, customer.getName());
             preparedStatement.setString(3, customer.getPhone());
             preparedStatement.setString(4, customer.getImage());
@@ -50,7 +50,7 @@ public class MySqlCustomerModel implements CustomerModel{
             System.out.println("Connection success!");
             ResultSet resultSet =preparedStatement.executeQuery();
             while (resultSet.next()){
-                int id = resultSet.getInt("id");
+                String id = resultSet.getString("id");
                 String name = resultSet.getString("name");
                 String phone = resultSet.getString("phone");
                 String image = resultSet.getString("image");
@@ -71,16 +71,17 @@ public class MySqlCustomerModel implements CustomerModel{
     }
 
     @Override
-    public Customer findById(int id) {
+    public Customer findById(String rollNumber) {
         Customer customer = null;
         try {
             Connection connection = ConnectionHelper.getConnection();
             String sqlQuery = "select * from customers where customers = ? and id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setInt(1, 1);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setString(2, rollNumber);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
+                String rollnumber = resultSet.getString("rollnumber");
                 String name = resultSet.getString("name");
                 String phone = resultSet.getString("phone");
                 String image = resultSet.getString("image");
@@ -91,7 +92,7 @@ public class MySqlCustomerModel implements CustomerModel{
                 LocalDateTime updatedAt =
                         LocalDateTime.ofInstant(resultSet.getTimestamp("updatedAt").toInstant(), ZoneId.systemDefault());
                 int status = resultSet.getInt("status");
-                customer = new Customer(id, name, phone, image, dob);
+                customer = new Customer(rollnumber ,name, phone, image, dob);
             }
         }catch (SQLException e){
             e.printStackTrace();
@@ -100,13 +101,13 @@ public class MySqlCustomerModel implements CustomerModel{
     }
 
     @Override
-    public Customer update(int id, Customer updateCustomer) {
+    public Customer update(String rollnumber, Customer updateCustomer) {
         try {
             Connection connection = ConnectionHelper.getConnection();
             String sqlQuery = "update customers " +
-                    "set id = ?, name = ?, phone = ?, image = ?, dob = ?, createdAt = ?, updatedAt = ?, status = ? where id = ?";
+                    "set rollnumber = ?, name = ?, phone = ?, image = ?, dob = ?, createdAt = ?, updatedAt = ?, status = ? where id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
-            preparedStatement.setInt(1, updateCustomer.getId());
+            preparedStatement.setString(1, updateCustomer.getRollnumber());
             preparedStatement.setString(2, updateCustomer.getName());
             preparedStatement.setString(3, updateCustomer.getPhone());
             preparedStatement.setString(4, updateCustomer.getImage());
@@ -114,7 +115,7 @@ public class MySqlCustomerModel implements CustomerModel{
             preparedStatement.setString(6, updateCustomer.getCreatedAt().toString());
             preparedStatement.setString(7, updateCustomer.getUpdatedAt().toString());
             preparedStatement.setInt(8, updateCustomer.getStatus());
-            preparedStatement.setInt(9, id);
+            preparedStatement.setString(9, rollnumber);
             System.out.println("Connection success!");
             preparedStatement.execute();
             return updateCustomer;
@@ -125,14 +126,14 @@ public class MySqlCustomerModel implements CustomerModel{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String rollNumber) {
         try {
             Connection connection = ConnectionHelper.getConnection();
             String sqlQuery = "update customers " +
                     "set status = ? where id = ?";
             PreparedStatement preparedStatement = connection.prepareStatement(sqlQuery);
             preparedStatement.setInt(1, -1);
-            preparedStatement.setInt(2, id);
+            preparedStatement.setString(2, rollNumber);
             System.out.println("Connection success!");
             preparedStatement.execute();
             return true;

@@ -14,7 +14,7 @@ public class InMemoryCustomerModel implements CustomerModel{
         customers = new ArrayList<>();
         customers.add(
                 new Customer(
-                        001,
+                        "1",
                         "Phung Hung",
                         "0124452141",
                         "https://bloggioitre.net/wp-content/uploads/2022/01/gai-dep-gai-xinh-viet-nam.jpg",
@@ -23,7 +23,7 @@ public class InMemoryCustomerModel implements CustomerModel{
         );
         customers.add(
         new Customer(
-                002,
+                "2",
                 "Phung Viet",
                 "0124452141",
                 "https://bloggioitre.net/wp-content/uploads/2022/01/gai-dep-gai-xinh-viet-nam.jpg",
@@ -32,7 +32,7 @@ public class InMemoryCustomerModel implements CustomerModel{
         );
         customers.add(
         new Customer(
-                003,
+                "3",
                 "Duc Duy",
                 "0124452141",
                 "https://bloggioitre.net/wp-content/uploads/2022/01/gai-dep-gai-xinh-viet-nam.jpg",
@@ -41,7 +41,7 @@ public class InMemoryCustomerModel implements CustomerModel{
         );
         customers.add(
         new Customer(
-                004,
+                "4",
                 "Dao Thang",
                 "0124452141",
                 "https://bloggioitre.net/wp-content/uploads/2022/01/gai-dep-gai-xinh-viet-nam.jpg",
@@ -62,11 +62,11 @@ public class InMemoryCustomerModel implements CustomerModel{
     }
 
     @Override
-    public Customer findById(int id) {
+    public Customer findById(String rollNumber) {
         Customer foundCustomer = null;
         for (Customer customer:
               customers) {
-            if (customer.getId() == id){
+            if (customer.getRollnumber() == rollNumber){
                 foundCustomer = customer;
                 break;
             }
@@ -75,8 +75,8 @@ public class InMemoryCustomerModel implements CustomerModel{
     }
 
     @Override
-    public Customer update(int id, Customer updateCustomer) {
-        Customer existingCustomer =findById(id);
+    public Customer update(String rollNumber, Customer updateCustomer) {
+        Customer existingCustomer =findById(rollNumber);
         if (existingCustomer == null){
             return null;
         }
@@ -90,10 +90,10 @@ public class InMemoryCustomerModel implements CustomerModel{
     }
 
     @Override
-    public boolean delete(int id) {
+    public boolean delete(String rollNumber) {
         int foundIndex = -1;
         for (int i = 0; i < customers.size(); i++) {
-            if (customers.get(i).getId() == id){
+            if (customers.get(i).getRollnumber() == rollNumber){
                 foundIndex = 1;
             }
         }

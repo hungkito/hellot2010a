@@ -1,9 +1,10 @@
 package com.example.hello_t2010a_agen.util;
 
 import java.sql.Connection;
-import java.sql.Driver;
 import java.sql.DriverManager;
 import java.sql.SQLException;
+
+import static java.lang.Class.forName;
 
 public class ConnectionHelper {
     private static final String CONNECTION_STRING = "jdbc:mysql://localhost:3306/hello_t2010a";
@@ -17,11 +18,15 @@ public class ConnectionHelper {
     public static Connection getConnection(){
         try {
             if (connection == null || connection.isClosed()){
+//                class.forName("com.mysql.jdbc.Driver");
                 connection = DriverManager.getConnection(CONNECTION_STRING, USERNAME, PASSWORD);
             }
-        }catch (SQLException e){
+        }catch (SQLException e) {
             e.printStackTrace();
         }
+//        }catch (ClassNotFoundException e) {
+//            e.printStackTrace();
+//        }
         return connection;
     }
 }

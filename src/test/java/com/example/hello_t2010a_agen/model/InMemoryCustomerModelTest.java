@@ -6,8 +6,6 @@ import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 class InMemoryCustomerModelTest {
 
     InMemoryCustomerModel model;
@@ -20,7 +18,7 @@ class InMemoryCustomerModelTest {
     void save() {
         System.out.println(model.findAll().size());
         Customer customer = new Customer(
-                005,
+                "1",
                 "Nguyen Hoang",
                 "03316245",
                 "https://bloggioitre.net/wp-content/uploads/2022/01/gai-dep-gai-xinh-viet-nam.jpg",
@@ -37,15 +35,15 @@ class InMemoryCustomerModelTest {
 
     @Test
     void findById() {
-        Customer customer = model.findById(001);
+        Customer customer = model.findById("001");
         System.out.println(customer.toString());
     }
 
     @Test
     void update() {
-        Customer customer = model.findById(001);
+        Customer customer = model.findById("001");
         customer.setName("Phung Viet Hung");
-        model.update(001, customer);
+        model.update("001", customer);
         for (Customer ct: model.findAll()) {
             System.out.println(ct.toString());
         }
@@ -53,7 +51,7 @@ class InMemoryCustomerModelTest {
 
     @Test
     void delete() {
-        model.delete(001);
+        model.delete("001");
         for (Customer ct: model.findAll()) {
             System.out.println(ct.toString());
         }

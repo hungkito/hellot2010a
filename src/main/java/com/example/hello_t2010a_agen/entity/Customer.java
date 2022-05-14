@@ -1,9 +1,11 @@
 package com.example.hello_t2010a_agen.entity;
 
+import com.example.hello_t2010a_agen.util.DateTimeHelper;
+
 import java.time.LocalDateTime;
 
 public class Customer {
-    private int Id;
+    private String Rollnumber;
     private String Name;
     private String Phone;
     private String Image;
@@ -12,8 +14,8 @@ public class Customer {
     private LocalDateTime updatedAt;
     private int status; // xoá mềm
 
-    public Customer(int id, String name, String phone, String image, LocalDateTime dob) {
-        Id = id;
+    public Customer(String rollnumber, String name, String phone, String image, LocalDateTime dob) {
+        Rollnumber = rollnumber;
         Name = name;
         Phone = phone;
         Image = image;
@@ -29,7 +31,7 @@ public class Customer {
     @Override
     public String toString() {
         return "Customer{" +
-                "Id=" + Id +
+                "Rollnumber='" + Rollnumber + '\'' +
                 ", Name='" + Name + '\'' +
                 ", Phone='" + Phone + '\'' +
                 ", Image='" + Image + '\'' +
@@ -40,12 +42,12 @@ public class Customer {
                 '}';
     }
 
-    public int getId() {
-        return Id;
+    public String getRollnumber() {
+        return Rollnumber;
     }
 
-    public void setId(int id) {
-        Id = id;
+    public void setRollnumber(String rollnumber) {
+        Rollnumber = rollnumber;
     }
 
     public String getName() {
@@ -102,5 +104,12 @@ public class Customer {
 
     public void setStatus(int status) {
         this.status = status;
+    }
+
+    public String getDobString() {
+        if(this.dob != null){
+            return DateTimeHelper.convertLocalDateTimeToString(this.dob);
+        }
+        return "";
     }
 }

@@ -9,9 +9,9 @@ public interface CustomerModel {
 
     List<Customer> findAll();
 
-    Customer findById(int id);
+    Customer findById(String rollNumber);
 
-    Customer update(int id, Customer updateCustomer);
+    Customer update(String rollnumber, Customer updateCustomer);
 
-    boolean delete(int id);
+    boolean delete(String rollNumber);
 }
