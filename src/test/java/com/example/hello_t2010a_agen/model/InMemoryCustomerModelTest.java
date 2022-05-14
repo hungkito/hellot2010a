@@ -42,7 +42,7 @@ class InMemoryCustomerModelTest {
     @Test
     void update() {
         Customer customer = model.findById("001");
-        customer.setName("Phung Viet Hung");
+        customer.setName("PhungVietHung");
         model.update("001", customer);
         for (Customer ct: model.findAll()) {
             System.out.println(ct.toString());

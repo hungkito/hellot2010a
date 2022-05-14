@@ -28,14 +28,14 @@ public class CreateCustomerServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         req.setCharacterEncoding("UTF-8");
-        String id = req.getParameter("id");
+        String rollnumber = req.getParameter("rollnumber");
         String name = req.getParameter("name");
         String phone = req.getParameter("phone");
         String image = req.getParameter("image");
         String stringBirthday = req.getParameter("birthday");
         System.out.println(name);
         LocalDateTime birthday = DateTimeHelper.convertStringToLocalDateTime(stringBirthday);
-        Customer customer = new Customer(id, name, phone, image, birthday);
+        Customer customer = new Customer(rollnumber, name, phone, image, birthday);
 
         if (customerModel.save(customer) != null){
             resp.sendRedirect("/admin/customers/list");

@@ -19,7 +19,7 @@ public class RegisterServlet extends HttpServlet {
         String password = req.getParameter("password");
 
         req.setAttribute("username", username);
-        req.setAttribute("password", password);
+        req.setAttribute("password", "***");
         req.getRequestDispatcher("Register-Success.jsp").forward(req, resp);
     }
 }
